@@ -27,7 +27,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
     public void nextAct(View v) {
         Intent i = new Intent(this, Main2Activity.class);
         startActivity(i);
