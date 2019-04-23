@@ -12,21 +12,27 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import android.net.NetworkInfo;
+import android.widget.Toast;
+
+import org.json.JSONObject;
 
 public class Main2Activity extends AppCompatActivity {
 
     TextView mTextViewResult;
     Button back, quote;
     private static final String TAG = "Main2Activity";
-    private  OkHttpClient okHttpClient;
+    private OkHttpClient okHttpClient;
     private Request request;
     private String url = "https://favqs.com/api/qotd";
     private TextView mResult;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main2);
-        Button back1 = (Button)findViewById(R.id.back);
+        Button back1 = (Button) findViewById(R.id.back);
         back1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -34,36 +40,32 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
-        TextView  mTextViewResult1 = (TextView)findViewById(R.id.text_view_reult);
-        Button quote1 = (Button)findViewById(R.id.quote);
+        TextView mTextViewResult1 =  findViewById(R.id.text_view_reult);
+        Button quote1 = (Button) findViewById(R.id.quote);
         quote1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-            okHttpClient = new OkHttpClient();
-            request = new Request.Builder().url(url).build();
-            okHttpClient.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(Call call, IOException e) {
-                    Log.i(TAG, e.getMessage());
-                }
+                okHttpClient = new OkHttpClient();
+                request = new Request.Builder().url(url).build();
+                okHttpClient.newCall(request).enqueue(new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                        e.printStackTrace();
+                    }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    final String myResponse = response.body().string();
-                    //Log.i(TAG,response.body().string());
-                    mTextViewResult1.setText(myResponse);
-                }
-            });
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                         //final String myResponse = response.body().string();
+                        Log.i(TAG, response.body().string());
+                        //mTextViewResult1.setText(myResponse);
+                    }
+                });
 
             }
+
+
         });
 
 
-
-
-
     }
-
-
-
 }
